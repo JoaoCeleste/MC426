@@ -27,9 +27,11 @@ services:
     depends_on:
       db:
         condition: service_healthy
+      test:
+        condition: service_completed_successfully
   test:
     build: ./
-    command: python -m unittest tests/test_database.py
+    command: python -m unittest tests/test_database.py tests/test_app.py
     environment:
       - POSTGRES_DB=MC426
       - POSTGRES_USER=root
