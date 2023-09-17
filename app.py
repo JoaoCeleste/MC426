@@ -1,5 +1,5 @@
 from flask import Flask
-from db.database import db
+from database.database import db
 from database.models import User
 from os import environ
 

@@ -1,4 +1,4 @@
-from db.database import db
+from database.database import db
 from database.models import User
 from flask import Blueprint
 

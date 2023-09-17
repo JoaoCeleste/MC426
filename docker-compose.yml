@@ -20,5 +20,15 @@ services:
     ports:
       - 5005:5005
 
+  test:
+    build: ./
+    command: python -m unittest tests/test_database.py
+    environment:
+      - POSTGRES_DB=MC426
+      - POSTGRES_USER=root
+      - POSTGRES_PASSWORD=root
+    volumes:
+      - .:/app
+
 volumes:
   db-data:
