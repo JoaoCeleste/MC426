@@ -1,8 +1,9 @@
-from database import db
-from models import User
+from db.database import db
+from database.models import User
 from flask import Blueprint
 
 routes = Blueprint('routes', __name__)
+
 
 @routes.route('/')
 def main():
