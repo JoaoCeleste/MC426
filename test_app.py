@@ -1,6 +1,6 @@
 import unittest
 from flask import Flask
-from Login import app, db, Users
+from app import app, db, Users
 
 class TestLogin(unittest.TestCase):
     def setUp(self):
