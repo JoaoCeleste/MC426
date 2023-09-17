@@ -1,0 +1,24 @@
+version: '3'
+
+services:
+  db:
+    image: 'postgres:16-alpine'
+    volumes:
+      - db-data:/var/lib/postgresql/data
+    environment:
+      - POSTGRES_DB=MC426
+      - POSTGRES_USER=root
+      - POSTGRES_PASSWORD=root
+    ports:
+      - 5432:5432
+  flask-app:
+    build: ./
+    environment:
+      - POSTGRES_DB=MC426
+      - POSTGRES_USER=root
+      - POSTGRES_PASSWORD=root
+    ports:
+      - 5000:5000
+
+volumes:
+  db-data:
