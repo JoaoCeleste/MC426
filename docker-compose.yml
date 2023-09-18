@@ -31,7 +31,7 @@ services:
         condition: service_completed_successfully
   test:
     build: ./
-    command: python -m unittest tests/test_database.py tests/test_app.py
+    command: python -m unittest tests/test_database.py tests/test_app.py tests/test_utils.py
     environment:
       - POSTGRES_DB=MC426
       - POSTGRES_USER=root
