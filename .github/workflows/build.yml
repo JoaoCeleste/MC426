@@ -1,0 +1,29 @@
+name: CI/CD
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v2
+
+    - name: Set up Docker Compose
+      uses: docker/compose-cli-action@v0.1.1
+
+    - name: Build and run Docker Compose services
+      run: docker-compose up -d --build
+
+    - name: Wait for the services to be healthy
+      run: docker-compose ps && sleep 20
+
+    - name: Run tests
+      run: docker-compose run test
+
+    - name: Stop Docker Compose services
+      run: docker-compose down
