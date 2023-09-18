@@ -53,7 +53,7 @@ class DatabaseIntegrationTests(unittest.TestCase):
             self.session.commit()
 
             info = IngredientInformation(ingredient_id=ingredient.id, calories=200,
-                                        proteins=20, fats=10, carbohydrates=0)
+                                         proteins=20, fats=10, carbohydrates=0)
             self.session.add(info)
             self.session.commit()
 

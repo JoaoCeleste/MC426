@@ -3,6 +3,7 @@ from database.database import db
 from database.models import User
 from app import create_app
 
+
 class TestLogin(unittest.TestCase):
     def setUp(self):
         # Configuração de teste
@@ -36,6 +37,7 @@ class TestLogin(unittest.TestCase):
         # Testa login com credenciais incorretas
         response = self.client.post("/login", data={"username": "testuser", "password": "wrongpassword"})
         self.assertEqual(response.status_code, 200)  # Deve permanecer na página de login
+
 
 if __name__ == "__main__":
     unittest.main()
