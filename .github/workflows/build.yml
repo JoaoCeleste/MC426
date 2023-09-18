@@ -13,17 +13,23 @@ jobs:
     - name: Checkout code
       uses: actions/checkout@v2
 
-    - name: Set up Docker Compose
-      uses: docker/compose-cli-action@v0.1.1
+    - name: Install Docker
+      run: |
+        sudo apt-get update
+        sudo apt-get -y install apt-transport-https ca-certificates curl gnupg-agent software-properties-common
+        curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -
+        sudo add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/ubuntu $(lsb_release -cs) stable"
+        sudo apt-get update
+        sudo apt-get -y install docker-ce docker-ce-cli containerd.io
 
     - name: Build and run Docker Compose services
-      run: docker-compose up -d --build
+      run: docker-compose -f docker-compose.yml up -d --build
 
     - name: Wait for the services to be healthy
-      run: docker-compose ps && sleep 20
+      run: docker-compose -f docker-compose.yml ps && sleep 20
 
     - name: Run tests
-      run: docker-compose run test
+      run: docker-compose -f docker-compose.yml run test
 
     - name: Stop Docker Compose services
-      run: docker-compose down
+      run: docker-compose -f docker-compose.yml down
