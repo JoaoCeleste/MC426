@@ -1,6 +1,8 @@
 import unittest
-from database.database import db
-from database.models import User, Ingredient, IngredientInformation, Recipe, RecipeIngredient, RecipeInstruction
+from models.database import db
+from models.user import User
+from models.ingredient import Ingredient, IngredientInformation
+from models.recipe import Recipe, RecipeIngredient, RecipeInstruction
 from app import create_app
 
 

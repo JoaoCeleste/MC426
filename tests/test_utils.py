@@ -1,8 +1,10 @@
 import unittest
-from database.database import db
-from database.models import User, Recipe, Ingredient, IngredientInformation, RecipeIngredient
+from models.database import db
+from models.ingredient import Ingredient, IngredientInformation
+from models.recipe import Recipe, RecipeIngredient
+from models.user import User
 from app import create_app
-from utils import calculate_macronutrients_for_recipe
+from services.recipe_logic import calculate_macronutrients_for_recipe
 
 
 class TestUtils(unittest.TestCase):

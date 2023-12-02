@@ -1,6 +1,6 @@
 import unittest
-from database.database import db
-from database.models import User
+from models.database import db
+from models.user import User
 from app import create_app
 
 
