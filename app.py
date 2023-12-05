@@ -6,7 +6,7 @@ from flask_login import LoginManager
 
 
 def create_app():
-    app = Flask(__name__)
+    app = Flask(__name__, template_folder='views')
 
     db_name = environ.get('POSTGRES_DB')
     db_user = environ.get('POSTGRES_USER')
