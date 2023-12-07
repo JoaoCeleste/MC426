@@ -18,10 +18,13 @@ services:
       retries: 5
   flask-app:
     build: ./
+    entrypoint: ["bash", "./entrypoint.sh"]
     environment:
       - POSTGRES_DB=MC426
       - POSTGRES_USER=root
       - POSTGRES_PASSWORD=root
+    volumes:
+      - .:/MC426
     ports:
       - 5005:5000
     depends_on:
@@ -31,7 +34,7 @@ services:
         condition: service_completed_successfully
   test:
     build: ./
-    command: python -m unittest tests/test_database.py tests/test_app.py tests/test_utils.py
+    command: python3 -m unittest tests/test_database.py tests/test_app.py tests/test_utils.py
     environment:
       - POSTGRES_DB=MC426
       - POSTGRES_USER=root

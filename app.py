@@ -3,6 +3,7 @@ from models.database import db
 from models.user import User
 from os import environ
 from flask_login import LoginManager
+from flask_migrate import Migrate
 
 
 def create_app():
@@ -12,6 +13,7 @@ def create_app():
     db_user = environ.get('POSTGRES_USER')
     db_password = environ.get('POSTGRES_PASSWORD')
     app.config['SQLALCHEMY_DATABASE_URI'] = f"postgresql://{db_user}:{db_password}@db:5432/{db_name}"
+    app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
     app.config["SECRET_KEY"] = "abc"
 
     db.init_app(app)
@@ -26,8 +28,11 @@ def create_app():
     from routes.routes import routes
     app.register_blueprint(routes)
 
+    from models import ingredient, recipe, user
     with app.app_context():
         db.create_all()
+
+    migrate = Migrate(app, db)
 
     return app
 
