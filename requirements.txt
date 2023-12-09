@@ -5,3 +5,4 @@ psycopg2==2.9.7
 flask_login==0.6.2
 Werkzeug==2.3.3
 Flask-Migrate==4.0.5
+Bootstrap-Flask==2.3.3

@@ -4,6 +4,7 @@ from models.user import User
 from os import environ
 from flask_login import LoginManager
 from flask_migrate import Migrate
+from flask_bootstrap import Bootstrap5
 
 
 def create_app():
@@ -33,6 +34,7 @@ def create_app():
         db.create_all()
 
     migrate = Migrate(app, db)
+    bootstrap = Bootstrap5(app)
 
     return app
 

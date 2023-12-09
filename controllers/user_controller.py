@@ -34,4 +34,4 @@ def logout():
 
 
 def home():
-    return render_template("home.html")
+    return render_template("index.html")
