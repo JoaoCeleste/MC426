@@ -34,7 +34,7 @@ class TestUtils(unittest.TestCase):
             self.session.add(test_user)
             self.session.commit()
 
-            recipe = Recipe(name="Test Recipe", user=test_user)
+            recipe = Recipe(name="Test Recipe", instruction="Placeholder")
             self.session.add(recipe)
             self.session.commit()
 
@@ -49,7 +49,7 @@ class TestUtils(unittest.TestCase):
             self.session.commit()
 
             recipe_ingredient = RecipeIngredient(
-                recipe_id=recipe.id, ingredient_id=ingredient.id, quantity=2, unit="g"
+                recipe_id=recipe.id, ingredient_id=ingredient.id, quantity=2
             )
             self.session.add(recipe_ingredient)
             self.session.commit()

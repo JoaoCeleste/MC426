@@ -152,4 +152,6 @@ def upgrade():
 
 
 def downgrade():
+    op.execute('DELETE FROM ingredient_information WHERE true')
+    op.execute('DELETE FROM ingredient WHERE true')
     pass
