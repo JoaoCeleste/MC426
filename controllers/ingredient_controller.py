@@ -6,6 +6,5 @@ import sys
 
 def index():
     ingredients = Ingredient.query.all()
-    print(ingredients, file=sys.stderr)
     names = [ingredient.name for ingredient in ingredients]
     return jsonify({'suggestions': names})
