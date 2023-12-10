@@ -1,0 +1,19 @@
+{% from 'bootstrap5/form.html' import render_form_row %}
+{% extends "base.html" %}
+{% block title %}Cadasto de Receitas{% endblock %}
+{% block content %}
+<h2>Cadastro de receitas</h2>
+<form method="post">
+    {{ form.csrf_token() }}
+    {{ render_form_row([form.name]) }}
+    <label class="form-label" for="ingredients">Ingredientes</label></br>
+    <div id="ingredients"></div>
+    <button type="button" class="btn btn-outline-success btn-sm add-ingredient-button" onclick="addIngredient()">+</button>
+    {{ render_form_row([form.instruction]) }}
+    {{ render_form_row([form.submit]) }}
+</form>
+{% endblock %}
+{% block scripts %}
+{{ super() }}
+<script src="{{ url_for('static', filename='recipe_register_script.js') }}"></script>
+{% endblock %}
