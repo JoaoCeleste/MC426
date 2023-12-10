@@ -148,6 +148,9 @@ def upgrade():
                             'carbohydrates': 28.17
                         }
                    ])
+    
+    op.execute("SELECT setval('ingredient_id_seq'::regclass, (SELECT max(id)::bigint from ingredient));")
+    op.execute("SELECT setval('ingredient_information_id_seq'::regclass, (SELECT max(id)::bigint from ingredient_information));")
     pass
 
 
