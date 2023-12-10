@@ -7,10 +7,7 @@ from app import create_app
 
 class DatabaseIntegrationTests(unittest.TestCase):
     def setUp(self):
-        self.app = create_app()
-        self.app.config.update({
-            "TESTING": True,
-        })
+        self.app = create_app('TESTING')
         self.session = db.session
 
     def tearDown(self):
