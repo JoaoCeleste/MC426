@@ -5,6 +5,7 @@ from os import environ
 from flask_login import LoginManager
 from flask_migrate import Migrate
 from flask_bootstrap import Bootstrap5
+from flask_wtf.csrf import CSRFProtect
 
 
 def create_app(env='DEVELOPMENT'):
@@ -33,6 +34,8 @@ def create_app(env='DEVELOPMENT'):
 
     migrate = Migrate(app, db)
     bootstrap = Bootstrap5(app)
+    if not env == 'TESTING':
+        csrf = CSRFProtect(app)
 
     return app
 

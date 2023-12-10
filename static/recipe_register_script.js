@@ -7,10 +7,10 @@ function addIngredient(){
     const newIngredient = `
         <div class="ingredient input-group mb-3 row">
             <div class="col">
-                <input type="text" name="${index}-ingredient_name" class="form-control ingredient-name" placeholder="Nome" required>
+                <input type="text" name="ingredients-${index}-ingredient_name" class="form-control ingredient-name" placeholder="Nome" required>
             </div>
             <div class="col">
-                <input type="text" name="${index}-quantity" class="form-control" placeholder="Quantidade" required>
+                <input type="text" name="ingredients-${index}-quantity" class="form-control" placeholder="Quantidade" required>
             </div>
             <div class="col align-self-center">
                 <button type="button" class="btn btn-outline-danger btn-sm" onclick="removeIngredient(this)">-</button>
@@ -20,7 +20,7 @@ function addIngredient(){
 
     container.insertAdjacentHTML('beforeend', newIngredient);
 
-    $(`[name="${index}-ingredient_name"]`).autocomplete({
+    $(`[name="ingredients-${index}-ingredient_name"]`).autocomplete({
         source: suggestions,
         minLength: 2
     })

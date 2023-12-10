@@ -3,8 +3,8 @@
 {% block title %}Cadasto de Receitas{% endblock %}
 {% block content %}
 <h2>Cadastro de receitas</h2>
-<form method="post">
-    {{ form.csrf_token() }}
+<form method="post" action="{{ url_for('routes.recipe_create') }}">
+    {{ form.hidden_tag() }}
     {{ render_form_row([form.name]) }}
     <label class="form-label" for="ingredients">Ingredientes</label></br>
     <div id="ingredients"></div>
