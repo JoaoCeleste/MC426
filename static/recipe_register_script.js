@@ -5,16 +5,12 @@ function addIngredient(){
     const index = container.children.length;
 
     const newIngredient = `
-        <div class="ingredient input-group mb-3 row">
-            <div class="col">
+        <div class="ingredient input-group mb-3 grid-3">
                 <input type="text" name="ingredients-${index}-ingredient_name" class="form-control ingredient-name" placeholder="Nome" required>
-            </div>
-            <div class="col">
-                <input type="text" name="ingredients-${index}-quantity" class="form-control" placeholder="Quantidade" required>
-            </div>
-            <div class="col align-self-center">
-                <button type="button" class="btn btn-outline-danger btn-sm" onclick="removeIngredient(this)">-</button>
-            </div>
+                <input type="text" name="ingredients-${index}-quantity" class="form-control quantity" placeholder="Quantidade" required>
+                <button type="button" class="btn btn-remove btn-sm" onclick="removeIngredient(this)">
+                    <span>-</span>
+                </button>
         </div>
     `;
 

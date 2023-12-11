@@ -1,0 +1,108 @@
+body {
+    background-color: #f9fafb;
+    color: #3a4453;
+
+    font-family: 'Rubik', sans-serif;
+}
+
+.btn-primary {
+    background-color: #ff6363;
+    color: #ffeeeb;
+    border: 0.1px solid #ff6363;
+}
+
+.btn-primary:hover,
+.btn-primary:active,
+.btn-primary:first-child:active,
+.btn-primary:focus-visible
+ {
+    background-color: #f7f7ff;
+    color: #ff6363;
+    border: 0.1px solid #ff6363;
+}
+
+.form-control {
+    width: 50%;
+}
+
+.navbar-collapse {
+    border-bottom: 1px solid rgba(128, 128, 128, 0.404);
+}
+
+.navbar-collapse .nav-item {
+    color: #ff6363;
+}
+
+.navbar-collapse .nav-display .nav-item .active {
+    color: #3a4453;
+}
+
+#ingredients .ingredient .grid-3 {
+   display: flex;
+   flex-direction: row;
+   justify-content: space-between;
+   gap: 10rem;
+}
+
+.input-group .form-control {
+    flex: none;
+    min-width: 300px;
+    margin-right: 1rem;
+    
+    border-radius: 0.375rem !important;
+}
+
+.ui-widget-content .ui-menu-item-wrapper {
+    border: none;
+    color: #3a4453;
+    font-weight: 300;
+    font-family: 'Rubik', sans-serif;
+}
+
+.input-group .quantity {
+    min-width: 150px;
+}
+
+.btn-sm {
+    display: flex;
+    align-items: center;
+
+    border-radius: 0.2rem !important;
+    padding: 0.75rem 0.5rem;
+    height: 15px;
+    align-self: center;
+}
+
+.btn-remove {
+    background-color: #ff6363;
+    color: #f7f7ff;
+    border: 0.1px solid #ff6363;
+}
+
+.btn-remove:hover,
+.btn-remove:active,
+.btn-remove:first-child:active,
+.btn-remove:focus-visible
+ {
+    background-color: none;
+    color: #ff6363;
+    border: 0.1px solid #ff6363;
+}
+
+.add-ingredient-button {
+    margin-bottom: 1rem;
+
+    background-color: none;
+    color: #3ec7a7;
+    border: 0.1px solid #3ec7a7;
+}
+
+.add-ingredient-button:hover,
+.add-ingredient-button:active,
+.add-ingredient-button:first-child:active,
+.add-ingredient-button:focus-visible
+ {
+    background-color: #3ec7a7;
+    color: #f7f7ff;
+    border: 0.1px solid #3ec7a7;
+}
