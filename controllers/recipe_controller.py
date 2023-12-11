@@ -1,13 +1,18 @@
 from models.recipe import Recipe, RecipeIngredient
 from models.ingredient import Ingredient
-from flask import render_template, request, url_for, redirect
+from flask import render_template, request, url_for, redirect, abort
 from forms.recipe_register_form import RecipeForm
 from models.database import db
+from flask_login import current_user
 
 def new():
+    if not current_user.is_authenticated or not current_user.is_admin:
+        return abort(403)
     return render_template("recipe_register.html", form=RecipeForm())
 
 def create():
+    if not current_user.is_authenticated or not current_user.is_admin:
+        return abort(403)
     form = RecipeForm(request.form)
 
     if form.validate_on_submit():

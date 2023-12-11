@@ -7,11 +7,10 @@
         <p class="error">{{ error }}</p>
         {% endif %}
         <form action="#" method="post">
-            <label for="username">Username:</label>
-            <input type="text" name="username" />
-            <label for="password">Password:</label>
-            <input type="password" name="password" />
-            <button type="submit">Submit</button>
+            {{ form.hidden_tag() }}
+            {{ render_form_row([form.username]) }}
+            {{ render_form_row([form.password]) }}
+            {{ render_form_row([form.submit]) }}
         </form>
     </div>
 {% endblock %}
