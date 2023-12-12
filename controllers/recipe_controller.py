@@ -2,7 +2,9 @@ from models.recipe import Recipe, RecipeIngredient
 from models.ingredient import Ingredient
 from flask import render_template, request, url_for, redirect, abort
 from forms.recipe_register_form import RecipeForm
+from forms.recipe_search_form import RecipeSearchByIngredientsForm, RecipeSearchByNameForm
 from models.database import db
+from sqlalchemy import or_
 from flask_login import current_user
 
 def new():
@@ -37,3 +39,25 @@ def create():
         return redirect(url_for('routes.recipe_new'))
     print(form.errors)
     return render_template("recipe_register.html", form = form)
+
+def search():
+    recipeForm = RecipeSearchByNameForm(request.args)
+    ingredientsForm = RecipeSearchByIngredientsForm(request.args)
+    if recipeForm.name.data:
+        names = recipeForm.name.data.split()
+
+        query_conditions = [Recipe.name.ilike(f"%{term}%") for term in names]
+        dynamic_query = or_(*query_conditions)
+
+        res = Recipe.query.filter(dynamic_query).all()
+    else:
+        ingredients = ingredientsForm.ingredients.data
+        ingredients = [Ingredient.query.filter(Ingredient.name == ingredient).first() for ingredient in ingredients]
+
+        freq = {}
+        for ingredient in ingredients:
+            print(ingredient.id)
+            recipes = [Recipe.query.get(recipe_ingredient.recipe_id) for recipe_ingredient in RecipeIngredient.query.filter(RecipeIngredient.ingredient_id == ingredient.id).all()]
+            print(recipes)
+
+    return render_template("index.html", recipeForm=recipeForm, ingredientsForm=ingredientsForm)

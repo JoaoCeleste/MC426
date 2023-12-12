@@ -1,6 +1,6 @@
 from flask import Blueprint
 from controllers.user_controller import register, login, logout, home
-from controllers.recipe_controller import new as recipe_new, create as recipe_create
+from controllers.recipe_controller import new as recipe_new, create as recipe_create, search as recipe_search
 from controllers.ingredient_controller import index
 
 routes = Blueprint('routes', __name__)
@@ -14,3 +14,4 @@ routes.route("/ingredients", methods=["GET"])(index)
 
 routes.route("/recipe/new", methods=["GET"], endpoint='recipe_new')(recipe_new)
 routes.route("/recipe", methods=["POST"], endpoint='recipe_create')(recipe_create)
+routes.route("/search", methods=["GET"], endpoint='recipe_search')(recipe_search)

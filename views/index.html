@@ -2,11 +2,30 @@
 {% block title %}Página Inicial{% endblock %}
 {% block content %}
 <div class="container">
-    {% if current_user.is_authenticated %}
-    <h1>You are logged in</h1>
-    <a class="logout-link" href="/logout">Logout</a>
-    {% else %}
-    <h1>You are not logged in</h1>
-    {% endif %}
+    <div class="index-search-tag">
+        <h2>Busque receitas pelos ingredientes</h2>
+        <form method="get" action="{{ url_for('routes.recipe_search') }}" id="ingredients-form">
+            <div class="ingredients-search-bar" id="ingredients-search-bar">
+                <input type="text" name="ingredients" class="search-input ingredients-input" id="ingredients-form-ingredients">
+                <div class="buttons">
+                    <button type="reset" class="btn btn-reset">Limpar</button>
+                    {{ render_form_row([ingredientsForm.submit]) }}
+                </div>
+            </div>
+        </form>
+    </div>
+    <div class="index-search-name">
+        <h2>...ou busque pelo nome</h2>
+        <form method="get" action="{{ url_for('routes.recipe_search') }}" id="recipe-form">
+            <div class="recipe-search-bar">
+                <input type="text" name="name" class="search-input recipe-input">
+                <button type="submit" name="submit" class="search-button"><i class="fa-solid fa-magnifying-glass"></i></button>
+            </div>
+        </form>
+    </div>
 </div>
+{% endblock %}
+{% block scripts %}
+{{ super() }}
+<script src="{{ url_for('static', filename='recipe_search_script.js') }}"></script>
 {% endblock %}
