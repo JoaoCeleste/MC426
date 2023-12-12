@@ -1,4 +1,5 @@
-from database.models import Recipe, RecipeIngredient, IngredientInformation
+from models.recipe import Recipe, RecipeIngredient
+from models.ingredient import IngredientInformation
 
 
 def calculate_macronutrients_for_recipe(recipe_id):
