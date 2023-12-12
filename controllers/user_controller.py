@@ -1,23 +1,20 @@
-from facade import Facade
+from models.database import db
+from models.user import User
 from flask import render_template, request, url_for, redirect
 from flask_login import login_user, logout_user
+from facade.user_facade import UserFacade  
 
 
-class UserController:
-    @staticmethod
-    def register():
-        return Facade.register()
+user_facade = UserFacade()
 
-    @staticmethod
-    def login():
-        return Facade.login()
+def register():
+    return user_facade.register()
 
-    @staticmethod
-    @login_required
-    def logout():
-        return Facade.logout()
+def login():
+    return user_facade.login()
 
-    @staticmethod
-    @login_required
-    def home():
-        return Facade.home()
+def logout():
+    return user_facade.logout()
+
+def home():
+    return user_facade.home()
