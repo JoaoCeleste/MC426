@@ -8,7 +8,16 @@ from sqlalchemy import or_
 from flask_login import current_user
 
 def index():
-    return abort(400)
+    recipes = request.args.getlist('recipes')
+    recipesOut = []
+    for recipe in recipes:
+        recipe = Recipe.query.get(recipe)
+        if recipe is not None:
+            recipesOut.append(recipe)
+    
+    if recipesOut == []:
+        recipesOut = Recipe.query.all()
+    return render_template("recipe_index.html", recipes=recipesOut)
 
 def new():
     if not current_user.is_authenticated or not current_user.is_admin:
@@ -67,6 +76,6 @@ def search():
                 else:
                     freq[recipe.id] = 1
 
-        recipes = [Recipe.query.get(key) for key, item in sorted(freq.items(), key = lambda x : x[1], reverse=True)]
+        recipes = [key for key, item in sorted(freq.items(), key = lambda x : x[1], reverse=True)]
 
     return redirect(url_for('routes.recipe_index', recipes=recipes))
