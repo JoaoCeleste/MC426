@@ -60,4 +60,4 @@ def search():
             recipes = [Recipe.query.get(recipe_ingredient.recipe_id) for recipe_ingredient in RecipeIngredient.query.filter(RecipeIngredient.ingredient_id == ingredient.id).all()]
             print(recipes)
 
-    return render_template("index.html", recipeForm=recipeForm, ingredientsForm=ingredientsForm)
+    return render_template("index.html", recipeForm=recipeForm, ingredientsForm=ingredientsForm) # TODO: use redirect
