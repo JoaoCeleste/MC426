@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+{% block title %}Cadasto de Ingredientes{% endblock %}
+{% block content %}
+<h2>Cadastro de ingredientes</h2>
+<form method="post" action="{{ url_for('routes.ingredients_create') }}">
+    {{ form.hidden_tag() }}
+    {{ render_form_row([form.ingredient_name]) }}
+    {{ render_form_row([form.calories]) }}
+    {{ render_form_row([form.carbohydrates]) }}
+    {{ render_form_row([form.proteins]) }}
+    {{ render_form_row([form.fats]) }}
+    {{ render_form_row([form.submit]) }}
+</form>
+{% endblock %}
+{% block scripts %}
+{{ super() }}
+{% endblock %}

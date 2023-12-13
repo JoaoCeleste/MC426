@@ -3,6 +3,7 @@ from models.user import User
 from flask import render_template, request, url_for, redirect
 from flask_login import login_user, logout_user, current_user
 from forms.user_register_form import UserForm
+from forms.recipe_search_form import RecipeSearchByIngredientsForm, RecipeSearchByNameForm
 
 class UserFacade:
     def register(self):
@@ -35,7 +36,7 @@ class UserFacade:
 
 
     def home(self):
-        return render_template("index.html")
+        return render_template("index.html", ingredientsForm=RecipeSearchByIngredientsForm(), recipeForm=RecipeSearchByNameForm())
     
     def is_admin(self):
         return current_user.is_authenticated and current_user.is_admin
