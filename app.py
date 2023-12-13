@@ -3,16 +3,18 @@ from models.database import db
 from models.user import User
 from os import environ
 from flask_login import LoginManager
+from flask_migrate import Migrate
+from flask_bootstrap import Bootstrap5
+from flask_wtf.csrf import CSRFProtect
 
 
-def create_app():
+def create_app(env='DEVELOPMENT'):
     app = Flask(__name__, template_folder='views')
 
-    db_name = environ.get('POSTGRES_DB')
-    db_user = environ.get('POSTGRES_USER')
-    db_password = environ.get('POSTGRES_PASSWORD')
-    app.config['SQLALCHEMY_DATABASE_URI'] = f"postgresql://{db_user}:{db_password}@db:5432/{db_name}"
-    app.config["SECRET_KEY"] = "abc"
+    if env == 'DEVELOPMENT':
+        app.config.from_object('config.development')
+    elif env == 'TESTING':
+        app.config.from_object('config.testing')
 
     db.init_app(app)
 
@@ -26,8 +28,14 @@ def create_app():
     from routes.routes import routes
     app.register_blueprint(routes)
 
+    import models
     with app.app_context():
         db.create_all()
+
+    migrate = Migrate(app, db)
+    bootstrap = Bootstrap5(app)
+    if not env == 'TESTING':
+        csrf = CSRFProtect(app)
 
     return app
 

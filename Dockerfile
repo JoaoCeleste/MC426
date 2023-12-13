@@ -8,5 +8,3 @@ RUN apt-get update \
     && pip3 install -r requirements.txt
 
 COPY . .
-
-CMD ["python3", "-u", "-m", "flask", "run", "--host=0.0.0.0"]

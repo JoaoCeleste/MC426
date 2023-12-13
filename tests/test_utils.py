@@ -9,10 +9,7 @@ from services.recipe_logic import calculate_macronutrients_for_recipe
 
 class TestUtils(unittest.TestCase):
     def setUp(self):
-        self.app = create_app()
-        self.app.config.update({
-            "TESTING": True,
-        })
+        self.app = create_app('TESTING')
         self.session = db.session
         self.client = self.app.test_client()
 
@@ -34,7 +31,7 @@ class TestUtils(unittest.TestCase):
             self.session.add(test_user)
             self.session.commit()
 
-            recipe = Recipe(name="Test Recipe", user=test_user)
+            recipe = Recipe(name="Test Recipe", instruction="Placeholder")
             self.session.add(recipe)
             self.session.commit()
 
@@ -49,7 +46,7 @@ class TestUtils(unittest.TestCase):
             self.session.commit()
 
             recipe_ingredient = RecipeIngredient(
-                recipe_id=recipe.id, ingredient_id=ingredient.id, quantity=2, unit="g"
+                recipe_id=recipe.id, ingredient_id=ingredient.id, quantity=2
             )
             self.session.add(recipe_ingredient)
             self.session.commit()

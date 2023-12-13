@@ -7,10 +7,7 @@ from app import create_app
 class TestLogin(unittest.TestCase):
     def setUp(self):
         # Configuração de teste
-        self.app = create_app()
-        self.app.config.update({
-            "TESTING": True,
-        })
+        self.app = create_app('TESTING')
         self.session = db.session
         self.client = self.app.test_client()
 

@@ -2,16 +2,12 @@ import unittest
 from models.database import db
 from models.user import User
 from models.ingredient import Ingredient, IngredientInformation
-from models.recipe import Recipe, RecipeIngredient, RecipeInstruction
 from app import create_app
 
 
 class DatabaseIntegrationTests(unittest.TestCase):
     def setUp(self):
-        self.app = create_app()
-        self.app.config.update({
-            "TESTING": True,
-        })
+        self.app = create_app('TESTING')
         self.session = db.session
 
     def tearDown(self):

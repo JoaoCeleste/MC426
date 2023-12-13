@@ -1,5 +1,6 @@
 from models.database import db
 from models.user import User
+from forms.user_register_form import UserForm
 from flask import render_template, request, url_for, redirect
 from flask_login import login_user, logout_user
 
@@ -11,10 +12,11 @@ def register():
         db.session.add(user)
         db.session.commit()
         return redirect(url_for("routes.login"))
-    return render_template("sign_up.html")
+    return render_template("sign_up.html", form=UserForm())
 
 
 def login():
+    form=UserForm()
     error = None
     if request.method == "POST":
         username = request.form.get("username")
@@ -25,7 +27,7 @@ def login():
             return redirect(url_for("routes.home"))
         else:
             error = "Nome de usuário ou senha incorretos. Tente novamente."
-    return render_template("login.html", error=error)
+    return render_template("login.html", error=error, form=form)
 
 
 def logout():
@@ -34,4 +36,4 @@ def logout():
 
 
 def home():
-    return render_template("home.html")
+    return render_template("index.html")
