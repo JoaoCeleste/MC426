@@ -14,10 +14,11 @@ def index():
         recipe = Recipe.query.get(recipe)
         if recipe is not None:
             recipesOut.append(recipe)
-    
-    if recipesOut == []:
-        recipesOut = Recipe.query.all()
+
     return render_template("recipe_index.html", recipes=recipesOut)
+
+def show(id):
+    return abort(400)
 
 def new():
     if not current_user.is_authenticated or not current_user.is_admin:
@@ -55,14 +56,18 @@ def create():
 def search():
     recipeForm = RecipeSearchByNameForm(request.args)
     ingredientsForm = RecipeSearchByIngredientsForm(request.args)
-    recipes = ""
-    if recipeForm.name.data:
+    recipes = []
+    if recipeForm.name.data != None:
         names = recipeForm.name.data.split()
 
         query_conditions = [Recipe.name.ilike(f"%{term}%") for term in names]
         dynamic_query = or_(*query_conditions)
 
         recipes = Recipe.query.filter(dynamic_query).all()
+        if recipes is not None:
+            recipes = [Recipe.id for Recipe in Recipe.query.filter(dynamic_query).all()]
+        else:
+            recipes = []
     elif ingredientsForm.ingredients.data:
         ingredients = ingredientsForm.ingredients.data
         ingredients = [Ingredient.query.filter(Ingredient.name == ingredient).first() for ingredient in ingredients]
@@ -71,6 +76,7 @@ def search():
         for ingredient in ingredients:
             recipes = [Recipe.query.get(recipe_ingredient.recipe_id) for recipe_ingredient in RecipeIngredient.query.filter(RecipeIngredient.ingredient_id == ingredient.id).all()]
             for recipe in recipes:
+                print(recipe)
                 if recipe.id in freq:
                     freq[recipe.id] += 1
                 else:

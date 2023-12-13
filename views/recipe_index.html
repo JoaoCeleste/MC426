@@ -1,12 +1,16 @@
 {% extends "base.html" %}
+{% import 'card.html' as card %}
 {% block title %}Página Inicial{% endblock %}
 {% block content %}
 <div class="container">
-    {% for recipe in recipes %}
-        <div class="recipe">
-            <img class="recipe-image" src="https://loremflickr.com/320/240/recipe,food?random={{ loop.index }}">
-        </div>
-        <h1>{{ recipe.name }}</h1>
-    {% endfor %}
+    {% if recipes == [] %}
+        <h1>Infelizmente não conseguimos encontrar nenhuma receita :(</h1>
+    {% endif %}
+    <h1>Receitas encontradas</h1>
+    <div class="card-wrapper">
+        {% for recipe in recipes %}
+            {{ card.card(recipe, loop.index) }}
+        {% endfor %}
+    </div>
 </div>
 {% endblock %}

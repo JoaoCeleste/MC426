@@ -1,0 +1,14 @@
+{% macro card(recipe, number) -%}
+    <a class="card-body" href="{{ url_for('routes.recipe_show', id=recipe.id) }}">
+        <img src="https://picsum.photos/id/{{ number }}/320/240"> 
+        <span class="recipe-name">{{ recipe.name }}</span>
+        <div class="card-recipe-tags">
+            <span class="recipe-tags">tag</span>        
+            <span class="recipe-tags">tag</span>        
+            <span class="recipe-tags">tag</span>        
+            <span class="recipe-tags">tag</span>        
+            <span class="recipe-tags">tag</span>        
+            <span class="recipe-tags">tag</span>        
+        </div>      
+    </a>
+{%- endmacro %}
