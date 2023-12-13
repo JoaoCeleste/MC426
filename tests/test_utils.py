@@ -36,6 +36,7 @@ class TestUtils(unittest.TestCase):
             self.session.commit()
 
             ingredient = Ingredient(name="Test Ingredient")
+            ingredient.recipes.append(RecipeIngredient(recipe=recipe,quantity=2))
             self.session.add(ingredient)
             self.session.commit()  
 
@@ -43,12 +44,6 @@ class TestUtils(unittest.TestCase):
                 ingredient_id=ingredient.id, calories=100, proteins=10, fats=5, carbohydrates=15
             )
             self.session.add(ingredient_info)
-            self.session.commit()
-
-            recipe_ingredient = RecipeIngredient(
-                recipe_id=recipe.id, ingredient_id=ingredient.id, quantity=2
-            )
-            self.session.add(recipe_ingredient)
             self.session.commit()
 
             macronutrients = calculate_macronutrients_for_recipe(recipe.id)

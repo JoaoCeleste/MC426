@@ -268,7 +268,8 @@ h1 {
     flex-wrap: wrap;
     justify-content: flex-start;
     gap: 0.5rem;
-    margin: 0 1rem;;
+    margin: 0 1rem;
+    overflow: hidden;
 }
 
 .recipe-tags {
