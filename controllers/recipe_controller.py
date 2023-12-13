@@ -74,6 +74,8 @@ def search():
 
         freq = {}
         for ingredient in ingredients:
+            if ingredient is None:
+                break
             recipes = [Recipe.query.get(recipe_ingredient.recipe_id) for recipe_ingredient in RecipeIngredient.query.filter(RecipeIngredient.ingredient_id == ingredient.id).all()]
             for recipe in recipes:
                 print(recipe)

@@ -5,12 +5,13 @@
 <div class="container">
     {% if recipes == [] %}
         <h1>Infelizmente não conseguimos encontrar nenhuma receita :(</h1>
+    {% else %}
+        <h1>Receitas encontradas</h1>
+        <div class="card-wrapper">
+            {% for recipe in recipes %}
+                {{ card.card(recipe, loop.index) }}
+            {% endfor %}
+        </div>
     {% endif %}
-    <h1>Receitas encontradas</h1>
-    <div class="card-wrapper">
-        {% for recipe in recipes %}
-            {{ card.card(recipe, loop.index) }}
-        {% endfor %}
-    </div>
 </div>
 {% endblock %}
