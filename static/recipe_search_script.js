@@ -16,7 +16,6 @@ window.onload = function(e){
     fetch('/ingredients')
     .then(RES => RES.json())
     .then(function(newWhitelist){
-        console.log(newWhitelist)
         tagify.whitelist = newWhitelist.suggestions // update whitelist Array in-place
         tagify.addTags(["Alho"])
     })

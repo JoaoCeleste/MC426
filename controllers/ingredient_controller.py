@@ -1,9 +1,7 @@
 from models.database import db
 from models.ingredient import Ingredient, IngredientInformation
-from models.recipe import Recipe, RecipeIngredient
 from flask import jsonify, render_template, request, url_for, redirect, abort
 from forms.ingredient_register_form import IngredientForm
-from flask_login import current_user
 from facade.user_facade import UserFacade
 
 user_facade = UserFacade()
@@ -17,7 +15,7 @@ def index():
 def show(id):
     ingredient = Ingredient.query.get(id)
     ingredient_information = IngredientInformation.query.filter(IngredientInformation.ingredient_id == id).first()
-    recipes_with_ingredient = Recipe.query.filter(RecipeIngredient.ingredient_id == id).all()
+    recipes_with_ingredient = [assoc.recipe for assoc in ingredient.recipes]
     if ingredient == None:
         return user_facade.home()
     return render_template("ingredient.html", ingredient=ingredient, info=ingredient_information, recipes=recipes_with_ingredient)

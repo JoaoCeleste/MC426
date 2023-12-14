@@ -1,6 +1,6 @@
 from models.recipe import Recipe, RecipeIngredient
 from models.ingredient import Ingredient
-from flask import render_template, request, url_for, redirect, abort
+from flask import jsonify, render_template, request, url_for, redirect, abort
 from forms.recipe_register_form import RecipeForm
 from forms.recipe_search_form import RecipeSearchByIngredientsForm, RecipeSearchByNameForm
 from forms.comment_form import CommentForm
@@ -27,12 +27,12 @@ def show(id):
     return render_template("recipe.html", recipe=recipe, form=CommentForm())
 
 def new():
-    if not user_facade.is_admin:
+    if not user_facade.is_admin():
         return abort(403)
     return render_template("recipe_register.html", form=RecipeForm())
 
 def create():
-    if not user_facade.is_admin:
+    if not user_facade.is_admin():
         return abort(403)
     form = RecipeForm(request.form)
 
@@ -87,3 +87,24 @@ def search():
         recipes = [key for key, item in sorted(freq.items(), key = lambda x : x[1], reverse=True)]
 
     return redirect(url_for('routes.recipe_index', recipes=recipes))
+
+def bookmark(id):
+    recipe = Recipe.query.get(id)
+    if recipe is None or not user_facade.is_authenticated():
+        return abort(404)
+    user = user_facade.current_user()
+    added = True
+    if recipe in user.recipes:
+        added = False
+        user.recipes.remove(recipe)
+    else:
+        user.recipes.append(recipe)
+    db.session.add(user)
+    db.session.commit()
+    return jsonify({'added': added}, 200)
+
+def bookmark_index():
+    if not user_facade.is_authenticated():
+        abort(403)
+    recipes = user_facade.current_user().recipes
+    return render_template('bookmarks.html', recipes=recipes)

@@ -1,15 +1,19 @@
 {% extends "base.html" %}
-{% block title %}Página Inicial{% endblock %}
+{% block title %}{{ recipe.name }}{% endblock %}
 {% block content %}
 <div class="container">
-    <h2 class="recipe-page-name">{{ recipe.name }}</h2>
+    <div class="recipe-page-top">
+        <h2 class="recipe-page-name">{{ recipe.name }}</h2>
+        <button class="bookmark-icon" onclick="bookmark()"><i class="{{ 'fa-solid' if recipe in current_user.recipes else 'fa-regular'  }} fa-heart fa-lg" id="bookmark-icon"></i></button>
+    </div>
+
     <div class="recipe-page-wrapper">
         <img src="https://picsum.photos/id/1000/640/480" class="recipe-page-img">         
         <div class="ingredients">
             <h3 class="recipe-page-h3">Ingredientes</h3>
             <ul class="recipe-page-ingredients-list">
                 {% for assoc in recipe.ingredients %}
-                    <li>{{ assoc.quantity|string + 'g' if assoc.quantity < 1000 else (assoc.quantity/1000)|string + 'kg' }} {{ assoc.ingredient.name }} </li>
+                    <li>{{ assoc.quantity|string + 'g' if assoc.quantity < 1000 else (assoc.quantity/1000)|string + 'kg' }} <a href="{{ url_for('routes.ingredients_show', id=assoc.ingredient.id) }}">{{ assoc.ingredient.name }}</a> </li>
                 {% endfor %}
             </ul>
         </div>
@@ -45,13 +49,42 @@
 {% block scripts %}
 {{ super() }}
 <script>
+function bookmark(){
+    const url = window.location.pathname;
+    const id = url.substring(url.lastIndexOf('/') + 1);
+    $.ajax({
+        url: '/bookmark/' + id,
+        method: 'POST',
+        dataType: 'json'
+    }).done(function(data){
+        let icon = document.getElementById('bookmark-icon')
+        if(data[0].added == true){
+            icon.classList.remove('fa-regular')
+            icon.classList.add('fa-solid')
+        } else if(data[0].added == false){
+            icon.classList.remove('fa-solid')
+            icon.classList.add('fa-regular')
+        }
+    })
+}
+
+window.onload = function(e){ 
     let comments = document.getElementsByClassName('comment-date')
     const options = { hour: 'numeric', minute: 'numeric' };
-    console.log(comments)
     for(let i = 0; i < comments.length; i++){
         let date = new Date(comments[i].innerText)
         date.setHours(date.getHours() - 3)
         comments[i].innerText = date.toLocaleDateString('pt-BR', options)
     }
+
+    const csrf_token = "{{ csrf_token() }}"
+    $.ajaxSetup({
+        beforeSend: function(xhr, settings) {
+            if (!/^(GET|HEAD|OPTIONS|TRACE)$/i.test(settings.type) && !this.crossDomain) {
+                xhr.setRequestHeader("X-CSRFToken", csrf_token);
+            }
+        }
+    });
+}
 </script>
 {% endblock %}

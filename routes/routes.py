@@ -1,6 +1,6 @@
 from flask import Blueprint
 from controllers.user_controller import register, login, logout, home, config
-from controllers.recipe_controller import new as recipe_new, create as recipe_create, search as recipe_search, index as recipe_index, show as recipe_show
+from controllers.recipe_controller import new as recipe_new, create as recipe_create, search as recipe_search, index as recipe_index, show as recipe_show, bookmark, bookmark_index as bookmarks
 from controllers.ingredient_controller import index as ingredient_index, new as ingredient_new, create as ingredient_create, show as ingredients_show
 from controllers.comment_controller import create as comment_create
 
@@ -24,3 +24,6 @@ routes.route("/recipe", methods=["POST"], endpoint='recipe_create')(recipe_creat
 routes.route("/search", methods=["GET"], endpoint='recipe_search')(recipe_search)
 
 routes.route("/recipe/<id>/comment", methods=["POST"], endpoint='comment_create')(comment_create)
+
+routes.route("/bookmark/<id>", methods=["POST"], endpoint='bookmark')(bookmark)
+routes.route("/bookmarks", methods=["GET"], endpoint='bookmarks')(bookmarks)

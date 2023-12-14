@@ -7,7 +7,7 @@
     {% block head %}
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <link rel="icon" href="{{ url_for('static', filename='favicon.ico') }}">
+    <link rel="icon" href="{{ url_for('static', filename='images/pan.png') }}">
     {% block styles %}
         <link href="//cdnjs.cloudflare.com/ajax/libs/jqueryui/1.11.2/jquery-ui.css" rel="stylesheet"/>
         {{ bootstrap.load_css() }}
@@ -43,9 +43,14 @@
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav mr-auto home">
                 {{ render_nav_item('routes.home', 'Home') }}
+                {% if current_user.is_admin %}
+                {{ render_nav_item('routes.ingredients_new', 'Novo ingrediente') }}
+                {{ render_nav_item('routes.recipe_new', 'Nova receita') }}
+                {% endif %}
             </ul>
             <ul class="navbar-nav ms-auto">
                 {% if current_user.is_authenticated %}
+                <li class="nav-item">{{ render_nav_item('routes.bookmarks', 'Meus favoritos') }}</li>
                 <li class="nav-item">{{ render_nav_item('routes.logout', 'Logout') }}</li>
                 {% else %}
                 <li class="nav-item">{{ render_nav_item('routes.login', 'Login') }}</li>
@@ -65,6 +70,23 @@
         <script src="https://code.jquery.com/ui/1.13.2/jquery-ui.min.js" integrity="sha256-lSjKY0/srUM9BE3dPm+c4fBo1dky2v27Gdjm2uoZaL0=" crossorigin="anonymous"></script>
         <script src="https://cdn.jsdelivr.net/npm/@yaireo/tagify"></script>
         <script src="https://cdn.jsdelivr.net/npm/@yaireo/tagify/dist/tagify.polyfills.min.js"></script>
+        <script>
+            document.addEventListener('DOMContentLoaded', function () {
+                const cardImages = document.querySelectorAll('.card-image');
+
+                // Function to generate a random image filename
+                function getRandomImage() {
+                    const randomIndex = Math.floor(Math.random() * 12) + 1; // Assuming you have 12 images
+                    return `${randomIndex}.jpg`;
+                }
+
+                // Set the src attribute of each card image
+                cardImages.forEach(function (cardImage) {
+                    const randomImage = getRandomImage();
+                    cardImage.src = `{{ url_for('static', filename='images/placeholder_images/') }}${randomImage}`;
+                });
+            });
+        </script>
         {{ bootstrap.load_js() }}
     {% endblock %}
 </body>

@@ -1,4 +1,5 @@
 {% extends "base.html" %}
+{% import 'card.html' as card %}
 {% block title %}Página Inicial{% endblock %}
 {% block content %}
 <div class="container">
@@ -22,6 +23,11 @@
                 <button type="submit" name="submit" class="search-button"><i class="fa-solid fa-magnifying-glass"></i></button>
             </div>
         </form>
+    </div>
+    <div class="card-wrapper">
+        {% for recipe in recipes %}
+            {{ card.card(recipe, loop.index) }}
+        {% endfor %}
     </div>
 </div>
 {% endblock %}
