@@ -1,5 +1,6 @@
 from models.database import db
 from models.user import User
+from models.recipe import Recipe
 from flask import render_template, request, url_for, redirect
 from flask_login import login_user, logout_user, current_user
 from forms.user_register_form import UserForm
@@ -69,7 +70,7 @@ class UserFacade:
         Returns:
             flask.Response: A Flask response, a rendered home page template with recipe search forms.
         """
-        return render_template("index.html", ingredientsForm=RecipeSearchByIngredientsForm(), recipeForm=RecipeSearchByNameForm())
+        return render_template("index.html", ingredientsForm=RecipeSearchByIngredientsForm(), recipeForm=RecipeSearchByNameForm(), recipes=Recipe.query.all())
 
     def is_admin(self):
         """

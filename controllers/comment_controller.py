@@ -16,7 +16,6 @@ def create(id):
 
     if form.validate_on_submit():
         comment = Comment(text=form.comment.data, recipe_id=recipe.id, user=user_facade.current_user())
-        print(comment)
         db.session.add(comment)
         db.session.commit()
 
