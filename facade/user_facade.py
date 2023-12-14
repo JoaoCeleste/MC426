@@ -4,6 +4,7 @@ from flask import render_template, request, url_for, redirect
 from flask_login import login_user, logout_user, current_user
 from forms.user_register_form import UserForm
 from forms.recipe_search_form import RecipeSearchByIngredientsForm, RecipeSearchByNameForm
+from controllers.user_controller import hash_password, check_password
 
 
 class UserFacade:
@@ -16,7 +17,7 @@ class UserFacade:
         """
         if request.method == "POST":
             user = User(username=request.form.get("username"),
-                        password=request.form.get("password"))
+                        password=hash_password(request.form.get("password")))
             db.session.add(user)
             db.session.commit()
             return redirect(url_for("routes.login"))
@@ -35,7 +36,7 @@ class UserFacade:
             username = request.form.get("username")
             password = request.form.get("password")
             user = User.query.filter_by(username=username).first()
-            if user is not None and user.password == password:
+            if user is not None and check_password(password, user.password):
                 login_user(user)
                 return redirect(url_for("routes.home"))
             else:
@@ -52,7 +53,7 @@ class UserFacade:
 
         logout_user()
         return redirect(url_for("routes.home"))
-    
+
     def current_user(self):
         """
         Returns the current_user.
@@ -69,7 +70,8 @@ class UserFacade:
         Returns:
             flask.Response: A Flask response, a rendered home page template with recipe search forms.
         """
-        return render_template("index.html", ingredientsForm=RecipeSearchByIngredientsForm(), recipeForm=RecipeSearchByNameForm())
+        return render_template("index.html", ingredientsForm=RecipeSearchByIngredientsForm(),
+                               recipeForm=RecipeSearchByNameForm())
 
     def is_admin(self):
         """
@@ -79,7 +81,7 @@ class UserFacade:
             bool: True if the current user is an admin and authenticated, False otherwise.
         """
         return current_user.is_authenticated and current_user.is_admin
-    
+
     def is_authenticated(self):
         """
         Check if the user is authenticated.
@@ -88,3 +90,19 @@ class UserFacade:
             bool: True if the current user is authenticated, False otherwise.
         """
         return current_user.is_authenticated
+
+    def config(self):
+        form = UserForm()
+        user = current_user
+        if request.method == "POST":
+            # Get form data
+            new_username = request.form.get("username")
+            new_password = request.form.get("password")
+            # Update user information in the database
+            user.username = new_username
+            user.password = hash_password(new_password)
+            db.session.commit()
+
+            print(f"User with ID {user.id} updated successfully.")
+
+        return render_template("config.html", form=form)
