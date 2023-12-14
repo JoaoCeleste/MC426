@@ -40,7 +40,6 @@ def upgrade():
                    ])
     
     op.execute("SELECT setval('recipe_id_seq'::regclass, (SELECT max(id)::bigint from recipe));")
-    op.execute("SELECT setval('recipe_ingredient_id_seq'::regclass, (SELECT max(id)::bigint from recipe_ingredient));")
 
     pass
 

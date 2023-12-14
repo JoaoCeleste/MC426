@@ -52,6 +52,15 @@ class UserFacade:
 
         logout_user()
         return redirect(url_for("routes.home"))
+    
+    def current_user(self):
+        """
+        Returns the current_user.
+
+        Returns:
+            current_user (User): The model of the User currently logged in.
+        """
+        return current_user
 
     def home(self):
         """
@@ -62,14 +71,20 @@ class UserFacade:
         """
         return render_template("index.html", ingredientsForm=RecipeSearchByIngredientsForm(), recipeForm=RecipeSearchByNameForm())
 
-    def is_admin(self, user):
+    def is_admin(self):
         """
         Check if the user is an admin.
 
-        Args:
-            user (User): The user to check.
+        Returns:
+            bool: True if the current user is an admin and authenticated, False otherwise.
+        """
+        return current_user.is_authenticated and current_user.is_admin
+    
+    def is_authenticated(self):
+        """
+        Check if the user is authenticated.
 
         Returns:
-            bool: True if the user is an admin and authenticated, False otherwise.
+            bool: True if the current user is authenticated, False otherwise.
         """
-        return user.is_authenticated and user.is_admin
+        return current_user.is_authenticated

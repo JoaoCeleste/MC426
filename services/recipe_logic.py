@@ -1,4 +1,4 @@
-from models.recipe import Recipe, RecipeIngredient
+from models.recipe import Recipe
 from models.ingredient import IngredientInformation
 
 
@@ -7,16 +7,16 @@ def calculate_macronutrients_for_recipe(recipe_id):
     if not recipe:
         return None
 
-    recipe_ingredients = RecipeIngredient.query.filter_by(recipe_id=recipe_id).all()
+    ingredients = recipe.ingredients
 
     total_calories = 0
     total_proteins = 0
     total_fats = 0
     total_carbohydrates = 0
 
-    for recipe_ingredient in recipe_ingredients:
-        ingredient_id = recipe_ingredient.ingredient_id
-        quantity = recipe_ingredient.quantity
+    for ingredient in ingredients:
+        ingredient_id = ingredient.ingredient_id
+        quantity = ingredient.quantity
 
         ingredient_info = IngredientInformation.query.filter_by(ingredient_id=ingredient_id).first()
 

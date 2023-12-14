@@ -3,11 +3,12 @@ from models.ingredient import Ingredient
 from flask import render_template, request, url_for, redirect, abort
 from forms.recipe_register_form import RecipeForm
 from forms.recipe_search_form import RecipeSearchByIngredientsForm, RecipeSearchByNameForm
+from forms.comment_form import CommentForm
 from models.database import db
 from sqlalchemy import or_
-from flask_login import current_user
+from facade.user_facade import UserFacade
 
-
+user_facade = UserFacade()
 
 def index():
     recipes = request.args.getlist('recipes')
@@ -20,15 +21,18 @@ def index():
     return render_template("recipe_index.html", recipes=recipesOut)
 
 def show(id):
-    return abort(400)
+    recipe = Recipe.query.get(id)
+    if recipe == None:
+        return user_facade.home()
+    return render_template("recipe.html", recipe=recipe, form=CommentForm())
 
 def new():
-    if not current_user.is_authenticated or not current_user.is_admin:
+    if not user_facade.is_admin:
         return abort(403)
     return render_template("recipe_register.html", form=RecipeForm())
 
 def create():
-    if not current_user.is_authenticated or not current_user.is_admin:
+    if not user_facade.is_admin:
         return abort(403)
     form = RecipeForm(request.form)
 
@@ -43,11 +47,7 @@ def create():
 
             ingredient = Ingredient.query.filter(Ingredient.name == name).first()
             if ingredient:
-                recipe_ingredient = RecipeIngredient(
-                    recipe_id = recipe.id,
-                    ingredient_id = ingredient.id,
-                    quantity = quantity)
-                db.session.add(recipe_ingredient)
+                recipe.ingredients.append(RecipeIngredient(ingredient=ingredient, quantity=quantity))
 
         db.session.commit()
 
@@ -77,12 +77,12 @@ def search():
         for ingredient in ingredients:
             if ingredient is None:
                 break
-            recipes = [Recipe.query.get(recipe_ingredient.recipe_id) for recipe_ingredient in RecipeIngredient.query.filter(RecipeIngredient.ingredient_id == ingredient.id).all()]
+            recipes = ingredient.recipes
             for recipe in recipes:
-                if recipe.id in freq:
-                    freq[recipe.id] += 1
+                if recipe.recipe.id in freq:
+                    freq[recipe.recipe.id] += 1
                 else:
-                    freq[recipe.id] = 1
+                    freq[recipe.recipe.id] = 1
 
         recipes = [key for key, item in sorted(freq.items(), key = lambda x : x[1], reverse=True)]
 
