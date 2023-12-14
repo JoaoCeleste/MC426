@@ -1,8 +1,8 @@
 {% extends "base.html" %}
-{% block title %}Change Profile Information{% endblock %}
+{% block title %}Alterar dados{% endblock %}
 {% block content %}
     <div class="container">
-        <h1>Change profile information</h1>
+        <h1>Alterar dados de <span class="config-user-name">{{ current_user.username }}</span></h1>
         {% if error %}
             <p class="error">{{ error }}</p>
         {% endif %}

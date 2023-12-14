@@ -151,6 +151,8 @@ h1 {
     background-image: url("./images/index-bg.jpg");
     min-width: 100%;
     min-height: 50vh;
+    background-repeat: no-repeat;
+    background-size: cover;
 
     display: flex;
     flex-direction: column;
@@ -474,4 +476,8 @@ progress { color: #3ec7a7; }
     font-weight: 300;
     color: #3a445365;
     margin-top: -15px;
+}
+
+.config-user-name {
+    color: #3ec7a7;
 }

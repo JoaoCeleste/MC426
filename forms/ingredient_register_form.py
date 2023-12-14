@@ -8,4 +8,4 @@ class IngredientForm(FlaskForm):
     proteins = StringField('Proteínas', validators=[DataRequired()])
     fats = StringField('Gorduras', validators=[DataRequired()])
     carbohydrates = StringField('Carboidratos', validators=[DataRequired()])
-    submit = SubmitField('Cadastrar')
+    submit = SubmitField('Confirmar')

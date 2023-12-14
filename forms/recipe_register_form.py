@@ -10,4 +10,4 @@ class RecipeForm(FlaskForm):
     name = StringField('Nome', validators=[DataRequired()])
     instruction = TextAreaField('Instruções', validators=[DataRequired()])
     ingredients = FieldList(FormField(IngredientForm), min_entries=1)
-    submit = SubmitField('Cadastrar')
+    submit = SubmitField('Confirmar')

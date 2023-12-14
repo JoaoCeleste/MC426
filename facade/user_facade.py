@@ -18,9 +18,10 @@ class UserFacade:
         if request.method == "POST":
             user = User(username=request.form.get("username"),
                         password=request.form.get("password"))
-            db.session.add(user)
-            db.session.commit()
-            return redirect(url_for("routes.login"))
+            if User.query.filter(User.username == user.username).first() is None:
+                db.session.add(user)
+                db.session.commit()
+                return redirect(url_for("routes.login"))            
         return render_template("sign_up.html", form=UserForm())
 
     def login(self):

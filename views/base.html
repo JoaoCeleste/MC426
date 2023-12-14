@@ -51,10 +51,11 @@
             <ul class="navbar-nav ms-auto">
                 {% if current_user.is_authenticated %}
                 <li class="nav-item">{{ render_nav_item('routes.bookmarks', 'Meus favoritos') }}</li>
+                <li class="nav-item">{{ render_nav_item('routes.config', 'Minha conta') }}</li>
                 <li class="nav-item">{{ render_nav_item('routes.logout', 'Logout') }}</li>
                 {% else %}
-                <li class="nav-item">{{ render_nav_item('routes.login', 'Login') }}</li>
-                <li class="nav-item">{{ render_nav_item('routes.register', 'Registrar') }}</li>
+                <li class="nav-item">{{ render_nav_item('routes.login', 'Entrar') }}</li>
+                <li class="nav-item">{{ render_nav_item('routes.register', 'Cadastrar') }}</li>
                 {% endif %}
             </ul>
         </div>

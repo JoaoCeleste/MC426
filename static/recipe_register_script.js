@@ -7,7 +7,7 @@ function addIngredient(){
     const newIngredient = `
         <div class="ingredient input-group mb-3 grid-3">
                 <input type="text" name="ingredients-${index}-ingredient_name" class="form-control ingredient-name" placeholder="Nome" required>
-                <input type="text" name="ingredients-${index}-quantity" class="form-control quantity" placeholder="Quantidade" required>
+                <input type="text" name="ingredients-${index}-quantity" class="form-control quantity" placeholder="Quantidade (g)" required>
                 <button type="button" class="btn btn-remove btn-sm" onclick="removeIngredient(this)">
                     <span>-</span>
                 </button>
