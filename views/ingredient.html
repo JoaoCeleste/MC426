@@ -1,29 +1,44 @@
 {% extends "base.html" %}
+{% import 'card.html' as card %}
 {% block title %}Página Inicial{% endblock %}
 {% block content %}
     <div class="container">
         <h2 align="center" class="ingredient-page-name">{{ ingredient.name }}</h2>
-            <div class="ingredient-macros">
-              <h3 class="Calories">Calorias: {{ info.calories }}
-                  <progress value="{{ info.calories }}" max="1000"></progress>
-              </h3>
-              <h3 class="Proteins">Proteinas: {{ info.proteins }}
-                  <progress value="{{ info.proteins }}" max="10"></progress>
-              </h3>
-              <h3 class="Carbohydrates">Carboidratos: {{ info.carbohydrates }}
-                  <progress value="{{ info.carbohydrates }}" max="100"></progress>
-              </h3>
-              <h3 class="Fats">Gorduras: {{ info.fats }}
-                  <progress value="{{ info.fats }}" max="10"></progress>
-              </h3>
+        <div class="ingredient-macros">
+            <div class="macro">
+                <h3 class="macro-label">Calorias: {{ info.calories }}</h3>
+                <progress class="macro-progress" value="{{ info.calories }}" max="1000"></progress>
             </div>
-            <div class="recipes">
-                <h3 class="ingredient-page-recipes">Receitas</h3>
-                <ul class="ingredient-page-recipes-list">
-                    {% for recipe in recipes %}
-                        <li>{{ recipe.name }}</li>
-                    {% endfor %}
-                </ul>
+
+            <div class="macro">
+                <h3 class="macro-label">Proteinas: {{ info.proteins }}</h3>
+                <progress class="macro-progress" value="{{ info.proteins }}" max="10"></progress>
             </div>
+
+            <div class="macro">
+                <h3 class="macro-label">Carboidratos: {{ info.carbohydrates }}</h3>
+                <progress class="macro-progress" value="{{ info.carbohydrates }}" max="100"></progress>
+            </div>
+
+            <div class="macro">
+                <h3 class="macro-label">Gorduras: {{ info.fats }}</h3>
+                <progress class="macro-progress" value="{{ info.fats }}" max="10"></progress>
+            </div>
+        </div>
+
+        <div class="recipes">
+            <div class="container">
+                {% if recipes == [] %}
+                    <h1>Infelizmente não conseguimos encontrar nenhuma receita :(</h1>
+                {% else %}
+                    <h1>Receitas encontradas</h1>
+                    <div class="card-wrapper">
+                        {% for recipe in recipes %}
+                            {{ card.card(recipe, loop.index) }}
+                        {% endfor %}
+                    </div>
+                {% endif %}
+            </div>
+        </div>
     </div>
 {% endblock %}
