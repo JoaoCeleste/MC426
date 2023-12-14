@@ -1,5 +1,5 @@
 from flask import Blueprint
-from controllers.user_controller import register, login, logout, home
+from controllers.user_controller import register, login, logout, home, config
 from controllers.recipe_controller import new as recipe_new, create as recipe_create, search as recipe_search, index as recipe_index, show as recipe_show
 from controllers.ingredient_controller import index as ingredient_index, new as ingredient_new, create as ingredient_create, show as ingredients_show
 from controllers.comment_controller import create as comment_create
@@ -8,6 +8,7 @@ routes = Blueprint('routes', __name__)
 
 routes.route('/register', methods=["GET", "POST"])(register)
 routes.route("/login", methods=["GET", "POST"])(login)
+routes.route("/config", methods=["GET", "POST"])(config)
 routes.route("/logout")(logout)
 routes.route("/")(home)
 
