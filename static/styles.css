@@ -377,6 +377,8 @@ progress { color: #3ec7a7; }
 }
 
 .recipe-page-img {
+    width: 640px;
+    height: 480px;
     border-radius: 0.375rem;
 }
 
