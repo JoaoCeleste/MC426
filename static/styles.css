@@ -282,3 +282,58 @@ h1 {
     border: 1px solid #ff6363;
     border-radius: 4px;
 }
+
+/* TODO: change below */
+
+.ingredient-page-name {
+    color: #2c3e50;
+    text-align: center;
+}
+
+.ingredient-macros {
+    margin-top: 20px;
+}
+
+.macro {
+    margin-bottom: 15px;
+    padding: 15px;
+    border-radius: 10px;
+    background-color: #ecf0f1;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.macro-label {
+    margin-bottom: 10px;
+    /*color: #3498db;*/
+}
+
+.macro-progress {
+    width: 100%;
+    height: 10px;
+    border-radius: 8px;
+    background: linear-gradient(90deg, #ffd86f, #fc6262);
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+}
+
+.macro-progress::-webkit-progress-value {
+    background: linear-gradient(90deg, #ffd86f, #fc6262);
+    border-radius: 8px;
+}
+
+.ingredient-page-recipes {
+    color: #2c3e50;
+    text-align: center;
+}
+
+.ingredient-page-recipes-list {
+    list-style-type: none;
+    padding: 0;
+}
+
+.ingredient-page-recipes-list li {
+    margin-bottom: 10px;
+    padding: 10px;
+    border-radius: 10px;
+    background-color: #ecf0f1;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
