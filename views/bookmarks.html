@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+{% import 'card.html' as card %}
+{% block title %}Meus favoritos{% endblock %}
+{% block content %}
+<div class="container">
+    {% if recipes == [] %}
+        <h1>Nenhuma receita favoritada :(</h1>
+    {% else %}
+        <h1>Minhas receitas favoritas</h1>
+        <div class="card-wrapper">
+            {% for recipe in recipes %}
+                {{ card.card(recipe, loop.index) }}
+            {% endfor %}
+        </div>
+    {% endif %}
+</div>
+{% endblock %}

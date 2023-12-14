@@ -1,0 +1,43 @@
+{% extends "base.html" %}
+{% import 'card.html' as card %}
+{% block title %}Informações do ingrediente{% endblock %}
+{% block content %}
+    <div class="container">
+        <h1 align="center" class="ingredient-page-name">{{ ingredient.name }}</h1>
+        <div class="ingredient-macros">
+            <div class="macro">
+                <div>
+                    <span class="macro-label">Calorias: {{ info.calories }}g</span>
+                    <progress class="macro-progress" value="{{ info.calories }}" max="1000"></progress>
+                </div>
+                <div>
+                    <span class="macro-label">Proteínas: {{ info.proteins }}g</span>
+                    <progress class="macro-progress" value="{{ info.proteins }}" max="100"></progress>
+                </div>
+                <div>
+                    <span class="macro-label">Carboidratos: {{ info.carbohydrates }}g</span>
+                    <progress class="macro-progress" value="{{ info.carbohydrates }}" max="100"></progress>
+                </div>
+                <div>
+                    <span class="macro-label">Gorduras: {{ info.fats }}g</span>
+                    <progress class="macro-progress" value="{{ info.fats }}" max="100"></progress>
+                </div>
+            </div>
+        </div>
+
+        <div class="recipes">
+            <div class="container">
+                {% if recipes == [] %}
+                    <h2>Infelizmente não conseguimos encontrar nenhuma receita :(</h2>
+                {% else %}
+                    <h2>Encontrado em</h2>
+                    <div class="card-wrapper">
+                        {% for recipe in recipes %}
+                            {{ card.card(recipe, loop.index) }}
+                        {% endfor %}
+                    </div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+{% endblock %}

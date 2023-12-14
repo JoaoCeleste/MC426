@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+{% block title %}Login{% endblock %}
+{% block content %}
+    <div class="container">
+        <h1>Entrar com sua conta</h1>
+        {% if error %}
+        <p class="error">{{ error }}</p>
+        {% endif %}
+        <form action="#" method="post">
+            {{ form.hidden_tag() }}
+            {{ render_form_row([form.username]) }}
+            {{ render_form_row([form.password]) }}
+            {{ render_form_row([form.submit]) }}
+        </form>
+    </div>
+{% endblock %}

@@ -1,16 +1,15 @@
 import unittest
-from database.database import db
-from database.models import User, Recipe, Ingredient, IngredientInformation, RecipeIngredient
+from models.database import db
+from models.ingredient import Ingredient, IngredientInformation
+from models.recipe import Recipe, RecipeIngredient
+from models.user import User
 from app import create_app
-from utils import calculate_macronutrients_for_recipe
+from services.recipe_logic import calculate_macronutrients_for_recipe
 
 
 class TestUtils(unittest.TestCase):
     def setUp(self):
-        self.app = create_app()
-        self.app.config.update({
-            "TESTING": True,
-        })
+        self.app = create_app('TESTING')
         self.session = db.session
         self.client = self.app.test_client()
 
@@ -32,11 +31,12 @@ class TestUtils(unittest.TestCase):
             self.session.add(test_user)
             self.session.commit()
 
-            recipe = Recipe(name="Test Recipe", user=test_user)
+            recipe = Recipe(name="Test Recipe", instruction="Placeholder")
             self.session.add(recipe)
             self.session.commit()
 
             ingredient = Ingredient(name="Test Ingredient")
+            ingredient.recipes.append(RecipeIngredient(recipe=recipe,quantity=2))
             self.session.add(ingredient)
             self.session.commit()  
 
@@ -44,12 +44,6 @@ class TestUtils(unittest.TestCase):
                 ingredient_id=ingredient.id, calories=100, proteins=10, fats=5, carbohydrates=15
             )
             self.session.add(ingredient_info)
-            self.session.commit()
-
-            recipe_ingredient = RecipeIngredient(
-                recipe_id=recipe.id, ingredient_id=ingredient.id, quantity=2, unit="g"
-            )
-            self.session.add(recipe_ingredient)
             self.session.commit()
 
             macronutrients = calculate_macronutrients_for_recipe(recipe.id)

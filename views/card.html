@@ -1,0 +1,11 @@
+{% macro card(recipe, number) -%}
+    <div class="card-body">
+        <img class="card-image"> 
+        <a class="recipe-name" href="{{ url_for('routes.recipe_show', id=recipe.id) }}">{{ recipe.name }}</a>
+        <div class="card-recipe-tags">
+            {% for assoc in recipe.ingredients %}
+                <span class="recipe-tags"><a href="{{ url_for('routes.ingredients_show', id=assoc.ingredient.id) }}">{{ assoc.ingredient.name }}</a></span>
+            {% endfor %}       
+        </div>      
+    </div>
+{%- endmacro %}

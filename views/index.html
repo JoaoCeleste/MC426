@@ -1,0 +1,37 @@
+{% extends "base.html" %}
+{% import 'card.html' as card %}
+{% block title %}Página Inicial{% endblock %}
+{% block content %}
+<div class="container">
+    <div class="index-search-tag">
+        <h2>Busque receitas pelos ingredientes</h2>
+        <form method="get" action="{{ url_for('routes.recipe_search') }}" id="ingredients-form">
+            <div class="ingredients-search-bar" id="ingredients-search-bar">
+                <input type="text" name="ingredients" class="search-input ingredients-input" id="ingredients-form-ingredients">
+                <div class="buttons">
+                    <button type="reset" class="btn btn-reset">Limpar</button>
+                    {{ render_form_row([ingredientsForm.submit]) }}
+                </div>
+            </div>
+        </form>
+    </div>
+    <div class="index-search-name">
+        <h2>...ou busque pelo nome</h2>
+        <form method="get" action="{{ url_for('routes.recipe_search') }}" id="recipe-form">
+            <div class="recipe-search-bar">
+                <input type="text" name="name" class="search-input recipe-input">
+                <button type="submit" name="submit" class="search-button"><i class="fa-solid fa-magnifying-glass"></i></button>
+            </div>
+        </form>
+    </div>
+    <div class="card-wrapper">
+        {% for recipe in recipes %}
+            {{ card.card(recipe, loop.index) }}
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}
+{% block scripts %}
+{{ super() }}
+<script src="{{ url_for('static', filename='recipe_search_script.js') }}"></script>
+{% endblock %}

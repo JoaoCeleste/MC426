@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+{% block title %}Alterar dados{% endblock %}
+{% block content %}
+    <div class="container">
+        <h1>Alterar dados de <span class="config-user-name">{{ current_user.username }}</span></h1>
+        {% if error %}
+            <p class="error">{{ error }}</p>
+        {% endif %}
+        <form action="#" method="post">
+            {{ form.hidden_tag() }}
+            {{ render_form_row([form.username]) }}
+            {{ render_form_row([form.password]) }}
+            {{ render_form_row([form.submit]) }}
+        </form>
+    </div>
+{% endblock %}
