@@ -6,11 +6,13 @@ from forms.ingredient_register_form import IngredientForm
 from flask_login import current_user
 from facade.user_facade import UserFacade as user_facade
 
+
 def index():
     ingredients = Ingredient.query.all()
     names = [ingredient.name for ingredient in ingredients]
     return jsonify({'suggestions': names})
 
+  
 def show(id):
     ingredient = Ingredient.query.get(id)
     ingredient_information = IngredientInformation.query.filter(IngredientInformation.ingredient_id == id).first()
@@ -19,8 +21,10 @@ def show(id):
         return user_facade.home()
     return render_template("ingredient.html", ingredient=ingredient, info=ingredient_information, recipes=recipes_with_ingredient)
 
+
 def new():
     return render_template("ingredient_register.html", form=IngredientForm())
+
 
 def create():
     if not current_user.is_authenticated or not current_user.is_admin:
@@ -28,15 +32,14 @@ def create():
     form = IngredientForm(request.form)
 
     if form.validate_on_submit():
-        print(form.ingredient_name.data)
         ingredient = Ingredient(name=form.ingredient_name.data)
         db.session.add(ingredient)
         db.session.flush()
-        ingredient_information = IngredientInformation(ingredient_id=ingredient.id, calories=form.calories.data, proteins=form.proteins.data, fats=form.fats.data, carbohydrates=form.carbohydrates.data)
+        ingredient_information = IngredientInformation(
+            ingredient_id=ingredient.id, calories=form.calories.data, proteins=form.proteins.data, fats=form.fats.data, carbohydrates=form.carbohydrates.data)
         db.session.add(ingredient_information)
         db.session.flush()
         db.session.commit()
 
         return redirect(url_for('routes.ingredients_new'))
-    print(form.errors)
-    return render_template("ingredient_register.html", form = form)
+    return render_template("ingredient_register.html", form=form)
