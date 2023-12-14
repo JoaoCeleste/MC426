@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+{% block title %}Página Inicial{% endblock %}
+{% block content %}
+    <div class="container">
+        <h2 align="center" class="ingredient-page-name">{{ ingredient.name }}</h2>
+            <div class="ingredient-macros">
+              <h3 class="Calories">Calorias: {{ info.calories }}
+                  <progress value="{{ info.calories }}" max="1000"></progress>
+              </h3>
+              <h3 class="Proteins">Proteinas: {{ info.proteins }}
+                  <progress value="{{ info.proteins }}" max="10"></progress>
+              </h3>
+              <h3 class="Carbohydrates">Carboidratos: {{ info.carbohydrates }}
+                  <progress value="{{ info.carbohydrates }}" max="100"></progress>
+              </h3>
+              <h3 class="Fats">Gorduras: {{ info.fats }}
+                  <progress value="{{ info.fats }}" max="10"></progress>
+              </h3>
+            </div>
+            <div class="recipes">
+                <h3 class="ingredient-page-recipes">Receitas</h3>
+                <ul class="ingredient-page-recipes-list">
+                    {% for recipe in recipes %}
+                        <li>{{ recipe.name }}</li>
+                    {% endfor %}
+                </ul>
+            </div>
+    </div>
+{% endblock %}
