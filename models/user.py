@@ -14,6 +14,8 @@ class User(db.Model, UserMixin):
     password = db.Column(db.String(250), nullable=False)
     recipes = db.relationship('Recipe', secondary=user_recipe, backref='users')
     admin = db.Column(db.Integer, default=0)
+    
+    comments = db.relationship('Comment', back_populates='user')
 
     @property
     def is_admin(self):

@@ -3,6 +3,9 @@ from models.ingredient import Ingredient, IngredientInformation
 from flask import jsonify, render_template, request, url_for, redirect, abort
 from forms.ingredient_register_form import IngredientForm
 from flask_login import current_user
+from facade.user_facade import UserFacade
+
+user_facade = UserFacade()
 
 def index():
     ingredients = Ingredient.query.all()
@@ -10,11 +13,13 @@ def index():
     return jsonify({'suggestions': names})
 
 def new():
+    if not user_facade.is_admin():
+        return user_facade.home()
     return render_template("ingredient_register.html", form=IngredientForm())
 
 def create():
-    if not current_user.is_authenticated or not current_user.is_admin:
-        return abort(403)
+    if not user_facade.is_admin():
+        return user_facade.home()
     form = IngredientForm(request.form)
 
     if form.validate_on_submit():

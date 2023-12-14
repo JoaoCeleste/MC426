@@ -3,9 +3,9 @@ from models.ingredient import Ingredient
 from flask import render_template, request, url_for, redirect, abort
 from forms.recipe_register_form import RecipeForm
 from forms.recipe_search_form import RecipeSearchByIngredientsForm, RecipeSearchByNameForm
+from forms.comment_form import CommentForm
 from models.database import db
 from sqlalchemy import or_
-from flask_login import current_user
 from facade.user_facade import UserFacade
 
 user_facade = UserFacade()
@@ -24,8 +24,7 @@ def show(id):
     recipe = Recipe.query.get(id)
     if recipe == None:
         return user_facade.home()
-    ingredients = recipe.ingredients
-    return render_template("recipe.html", recipe=recipe, ingredients=ingredients)
+    return render_template("recipe.html", recipe=recipe, form=CommentForm())
 
 def new():
     if not user_facade.is_admin:

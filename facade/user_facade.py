@@ -33,10 +33,15 @@ class UserFacade:
     def logout(self):
         logout_user()
         return redirect(url_for("routes.home"))
-
+    
+    def current_user(self):
+        return current_user
 
     def home(self):
         return render_template("index.html", ingredientsForm=RecipeSearchByIngredientsForm(), recipeForm=RecipeSearchByNameForm())
     
+    def is_authenticated(self):
+        return current_user.is_authenticated
+
     def is_admin(self):
         return current_user.is_authenticated and current_user.is_admin

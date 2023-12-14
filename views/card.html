@@ -3,8 +3,8 @@
         <img src="https://picsum.photos/id/{{ number }}/320/240"> 
         <span class="recipe-name">{{ recipe.name }}</span>
         <div class="card-recipe-tags">
-            {% for ingredient in recipe.ingredients %}
-                <span class="recipe-tags">{{ ingredient.ingredient.name }}</span>
+            {% for assoc in recipe.ingredients %}
+                <span class="recipe-tags">{{ assoc.ingredient.name }}</span>
             {% endfor %}       
         </div>      
     </a>

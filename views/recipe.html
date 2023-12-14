@@ -1,0 +1,57 @@
+{% extends "base.html" %}
+{% block title %}Página Inicial{% endblock %}
+{% block content %}
+<div class="container">
+    <h2 class="recipe-page-name">{{ recipe.name }}</h2>
+    <div class="recipe-page-wrapper">
+        <img src="https://picsum.photos/id/1000/640/480" class="recipe-page-img">         
+        <div class="ingredients">
+            <h3 class="recipe-page-h3">Ingredientes</h3>
+            <ul class="recipe-page-ingredients-list">
+                {% for assoc in recipe.ingredients %}
+                    <li>{{ assoc.quantity|string + 'g' if assoc.quantity < 1000 else (assoc.quantity/1000)|string + 'kg' }} {{ assoc.ingredient.name }} </li>
+                {% endfor %}
+            </ul>
+        </div>
+    </div>
+    <div class="recipe-page-instructions">
+        <h3 class="recipe-page-h3">Instruções</h3>
+        {{ recipe.instruction }}
+    </div>
+
+    <div class="comment-section">
+        <h2>Seção de comentários</h2>
+        <div class="comment-section-create">
+            <form class="comentario" method="post" action="{{ url_for('routes.comment_create', id=recipe.id) }}">
+                {{ form.hidden_tag() }}
+                {{ form.comment }}
+                {{ render_form_row([form.submit]) }}
+            </form>
+        </div>
+
+        <div class="comment-section-posted-wrapper">
+            {% for comment in recipe.comments %}
+                <div class="comment-section-posted">
+                    <p>{{ comment.text }}</p>
+                    <span>
+                        {{ comment.user.username }} | <span class="comment-date">{{ comment.created_at }}</span>
+                    </span>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+</div>
+{% endblock %}
+{% block scripts %}
+{{ super() }}
+<script>
+    let comments = document.getElementsByClassName('comment-date')
+    const options = { hour: 'numeric', minute: 'numeric' };
+    console.log(comments)
+    for(let i = 0; i < comments.length; i++){
+        let date = new Date(comments[i].innerText)
+        date.setHours(date.getHours() - 3)
+        comments[i].innerText = date.toLocaleDateString('pt-BR', options)
+    }
+</script>
+{% endblock %}
