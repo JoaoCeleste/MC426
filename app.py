@@ -8,7 +8,7 @@ from flask_bootstrap import Bootstrap5
 from flask_wtf.csrf import CSRFProtect
 
 
-def create_app():
+def create_app(env='DEVELOPMENT'):
     """
     Create and configure the Flask application.
 
@@ -20,7 +20,6 @@ def create_app():
         Flask: The configured Flask application.
     """
     app = Flask(__name__, template_folder='views')
-    env = environ.get('FLASK_ENV', 'DEVELOPMENT')
 
     if env == 'DEVELOPMENT':
         app.config.from_object('config.development')
