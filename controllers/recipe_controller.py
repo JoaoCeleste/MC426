@@ -7,6 +7,8 @@ from models.database import db
 from sqlalchemy import or_
 from flask_login import current_user
 
+
+
 def index():
     recipes = request.args.getlist('recipes')
     recipesOut = []
@@ -50,21 +52,20 @@ def create():
         db.session.commit()
 
         return redirect(url_for('routes.recipe_new'))
-    print(form.errors)
     return render_template("recipe_register.html", form = form)
 
 def search():
     recipeForm = RecipeSearchByNameForm(request.args)
     ingredientsForm = RecipeSearchByIngredientsForm(request.args)
     recipes = []
-    if recipeForm.name.data != None:
+    if recipeForm.name.data:
         names = recipeForm.name.data.split()
 
         query_conditions = [Recipe.name.ilike(f"%{term}%") for term in names]
         dynamic_query = or_(*query_conditions)
 
         recipes = Recipe.query.filter(dynamic_query).all()
-        if recipes is not None:
+        if recipes:
             recipes = [Recipe.id for Recipe in Recipe.query.filter(dynamic_query).all()]
         else:
             recipes = []
@@ -78,7 +79,6 @@ def search():
                 break
             recipes = [Recipe.query.get(recipe_ingredient.recipe_id) for recipe_ingredient in RecipeIngredient.query.filter(RecipeIngredient.ingredient_id == ingredient.id).all()]
             for recipe in recipes:
-                print(recipe)
                 if recipe.id in freq:
                     freq[recipe.id] += 1
                 else:

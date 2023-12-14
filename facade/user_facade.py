@@ -5,8 +5,15 @@ from flask_login import login_user, logout_user, current_user
 from forms.user_register_form import UserForm
 from forms.recipe_search_form import RecipeSearchByIngredientsForm, RecipeSearchByNameForm
 
+
 class UserFacade:
     def register(self):
+        """
+        Register a new user.
+
+        Returns:
+            flask.Response: A Flask response, either a redirect to the login page or a rendered sign-up template.
+        """
         if request.method == "POST":
             user = User(username=request.form.get("username"),
                         password=request.form.get("password"))
@@ -15,8 +22,13 @@ class UserFacade:
             return redirect(url_for("routes.login"))
         return render_template("sign_up.html", form=UserForm())
 
+    def login(self):
+        """
+        Log in a user.
 
-    def login(self):  
+        Returns:
+            flask.Response: A Flask response, either a redirect to the home page or a rendered login template with an error message.
+        """
         form = UserForm()
         error = None
         if request.method == "POST":
@@ -31,12 +43,33 @@ class UserFacade:
         return render_template("login.html", error=error, form=form)
 
     def logout(self):
+        """
+        Log out the current user.
+
+        Returns:
+            flask.Response: A Flask response, a redirect to the home page.
+        """
+
         logout_user()
         return redirect(url_for("routes.home"))
 
-
     def home(self):
+        """
+        Render the home page.
+
+        Returns:
+            flask.Response: A Flask response, a rendered home page template with recipe search forms.
+        """
         return render_template("index.html", ingredientsForm=RecipeSearchByIngredientsForm(), recipeForm=RecipeSearchByNameForm())
-    
-    def is_admin(self):
-        return current_user.is_authenticated and current_user.is_admin
+
+    def is_admin(self, user):
+        """
+        Check if the user is an admin.
+
+        Args:
+            user (User): The user to check.
+
+        Returns:
+            bool: True if the user is an admin and authenticated, False otherwise.
+        """
+        return user.is_authenticated and user.is_admin
