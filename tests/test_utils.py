@@ -213,7 +213,7 @@ def test_max_macronutrients_amount(self):
 
             macronutrients = calculate_macronutrients_for_recipe(recipe.id)
 
-            
+            # Use assertGreater or assertGreaterEqual to check if the values are above the maximum
             self.assertGreater(macronutrients["total_calories"], max_calories)
             self.assertGreater(macronutrients["total_proteins"], max_proteins)
             self.assertGreater(macronutrients["total_fats"], max_fats)
